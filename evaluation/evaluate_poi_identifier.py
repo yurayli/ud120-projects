@@ -35,7 +35,7 @@ from sklearn.metrics import accuracy_score
 features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.3, random_state=42)
 clf = DecisionTreeClassifier()
 clf.fit(features_train, labels_train)
-#pred = clf.predict(features_test)
+pred = clf.predict(features_test)
 acc = clf.score(features_test, labels_test) # test accuracy
 
 
