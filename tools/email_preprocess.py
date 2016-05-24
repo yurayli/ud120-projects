@@ -9,7 +9,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_selection import SelectPercentile, f_classif
 
 
-
 def preprocess(words_file = "../tools/word_data.pkl", authors_file="../tools/email_authors.pkl"):
     """ 
         this function takes a pre-made list of email texts (by default word_data.pkl)
@@ -41,19 +40,14 @@ def preprocess(words_file = "../tools/word_data.pkl", authors_file="../tools/ema
     ### (remainder go into training)
     features_train, features_test, labels_train, labels_test = cross_validation.train_test_split(word_data, authors, test_size=0.1, random_state=42)
 
-
-
     ### text vectorization--go from strings to lists of numbers
-    vectorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.5,
-                                 stop_words='english')
+    vectorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.5, stop_words='english')
     features_train_transformed = vectorizer.fit_transform(features_train)
     features_test_transformed  = vectorizer.transform(features_test)
 
-
-
     ### feature selection, because text is super high dimensional and 
     ### can be really computationally chewy as a result
-    selector = SelectPercentile(f_classif, percentile=10)
+    selector = SelectPercentile(f_classif, percentile=1)
     selector.fit(features_train_transformed, labels_train)
     features_train_transformed = selector.transform(features_train_transformed).toarray()
     features_test_transformed  = selector.transform(features_test_transformed).toarray()

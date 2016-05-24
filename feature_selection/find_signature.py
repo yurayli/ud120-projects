@@ -38,6 +38,26 @@ labels_train   = labels_train[:150]
 
 
 ### your code goes here
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+#t1 = time()
+clf = DecisionTreeClassifier()
+clf.fit(features_train, labels_train)
+#print "training time:", round(time() - t1, 3), "s"
+
+#t2 = time()
+pred = clf.predict(features_test)
+accu = accuracy_score(pred, labels_test) # test accuracy
+print "Trained data points:", len(labels_train)
+print "Test data points:", len(pred)
+print "Accuracy:", accu
 
 
-
+featureImp = clf.feature_importances_
+featureImp = numpy.array(featureImp)
+pwrImp = featureImp[featureImp > 0.2]
+maxImp = numpy.where(featureImp == max(featureImp))[0][0]
+print "Maximum importance and its order in features:", max(featureImp), maxImp # 0.7647 33614; 0.6667 14343
+print "Several power Imps:", pwrImp[:10] if len(pwrImp) >= 10 else pwrImp[0]
+print "Most important word:", vectorizer.get_feature_names()[maxImp] # sshacklensf; cgermannsf
