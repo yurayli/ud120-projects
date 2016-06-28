@@ -36,7 +36,7 @@ t2 = time()
 pred = clf.predict(features_test) # evaluation
 print "testing time:", round(time() - t2, 3), "s"
 
-accuracy = accuracy_score(pred, labels_test) # test accuracy
+accuracy = accuracy_score(pred, labels_test) # test accuracy 92.04%
 print "Accuracy:", accuracy
 
 print "Whole elapsed time:", round(time() - t0, 3), "s"
