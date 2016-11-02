@@ -27,6 +27,13 @@ labels, features = targetFeatureSplit(data)
 
 
 
-### it's all yours from here forward!  
+### it's all yours from here forward!  (overfitting case)
+from sklearn.cross_validation import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
 
-
+features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.3, random_state=42)
+clf = DecisionTreeClassifier()
+clf.fit(features_train, labels_train)
+acc = clf.score(features_test, labels_test) # test accuracy
+print "Accuracy:", acc

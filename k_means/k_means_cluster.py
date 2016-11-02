@@ -4,17 +4,13 @@
     Skeleton code for k-means clustering mini-project.
 """
 
-
-
-
 import pickle
 import numpy
 import matplotlib.pyplot as plt
+from time import time
 import sys
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
-
-
 
 
 def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature 1", f2_name="feature 2"):
@@ -22,7 +18,7 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
 
     ### plot each cluster with a different color--add more colors for
     ### drawing more than five clusters
-    colors = ["b", "c", "k", "m", "g"]
+    colors = ["c", "m", "b", "k", "g"]
     for ii, pp in enumerate(pred):
         plt.scatter(features[ii][0], features[ii][1], color = colors[pred[ii]])
 
@@ -46,12 +42,17 @@ data_dict.pop("TOTAL", 0)
 
 ### the input features we want to use 
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
+from sklearn.preprocessing import MinMaxScaler
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
+feature_3 = "total_payments"
 poi  = "poi"
 features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
+scaler = MinMaxScaler()
+scaler.fit(finance_features)
+finance_features = scaler.transform(finance_features)
 
 
 ### in the "clustering with 3 features" part of the mini-project,
@@ -64,8 +65,15 @@ plt.show()
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
-
-
+from sklearn.cluster import KMeans
+t0 = time()
+clust = KMeans(n_clusters=2)
+clust.fit(finance_features)
+print "rescaled salary $200000 is", scaler.transform([[200000, 1000000]])
+print "training time:", round(time() - t0, 3), "s"
+pred = clust.predict(finance_features)
+print "Num of clustered samples:", len(pred)
+print "The first 10 clustered element is", pred[0:10]
 
 
 ### rename the "name" parameter when you change the number of features
