@@ -1,3 +1,4 @@
+## This file is to try some pieces of the main (poi_id.py)
 import sys
 import pickle
 sys.path.append("../tools/")

@@ -53,7 +53,6 @@ print "Train accuracy:", clf.score(features_train, labels_train)
 print "Test data points:", len(pred)
 print "Test accuracy:", accu
 
-
 featureImp = clf.feature_importances_
 featureImp = numpy.array(featureImp)
 pwrImp = featureImp[featureImp > 0.2]

@@ -77,7 +77,7 @@ crs_validate = True
 if crs_validate:
 	
 	t0 = time()
-	cv = KFold( len(labels), 5, shuffle=False )
+	cv = KFold( len(labels), 5, shuffle=True )
 	accu_train_list = []
 	accu_list = []
 	P_list = []
